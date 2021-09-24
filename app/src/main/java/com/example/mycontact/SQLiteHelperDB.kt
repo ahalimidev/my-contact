@@ -55,4 +55,23 @@ class SQLiteHelperDB(context: Context) : SQLiteOpenHelper(context,"contact.db",n
         return (("$_success").toInt() != -1)
     }
 
+    fun update_sync(id : Int): Boolean {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put("snyc", 1)
+        val _success = db.update("kontak", values, "id_kontak = $id",null )
+        return (("$_success").toInt() != -1)
+    }
+
+    fun download_kontak(kontak: Kontak): Boolean {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put("nama_kontak", kontak.nama_kontak)
+        values.put("nomor_telepon", kontak.nomor_telepon)
+        values.put("email", kontak.email)
+        values.put("status_kontak", kontak.status_kontak)
+        values.put("snyc", 1)
+        val _success = db.insert("kontak", null, values)
+        return (("$_success").toInt() != -1)
+    }
 }
